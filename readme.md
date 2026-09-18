@@ -1,0 +1,1 @@
+# Uczenie Maszynowe UWM, semestr 5, rok akademicki 2026/27

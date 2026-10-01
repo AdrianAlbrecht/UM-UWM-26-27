@@ -401,39 +401,351 @@ Oceniane będą przede wszystkim:
 
 ## 9. Punktacja i zakres projektu
 
-### Projekt – 70 pkt
+### 9.1. Charakter projektu
 
-- **Opis problemu i zbioru danych – 5 pkt**
-- **Przygotowanie danych – 5 pkt**
-- **Dobór algorytmów i uzasadnienie wyboru – 10 pkt**
-- **Poprawne wykorzystanie / implementacja algorytmów – 20 pkt**
-- **Eksperymenty z parametrami i konfiguracją algorytmów – 10 pkt**
-- **Porównanie działania zastosowanych metod – 10 pkt**
-- **Wnioski i krytyczna analiza rezultatów – 10 pkt**
+Podstawą zaliczenia laboratoriów jest **indywidualny projekt programistyczny stanowiący portfolio własnych implementacji algorytmów uczenia maszynowego omawianych podczas zajęć**.
 
-### Obrona projektu – 30 pkt
+Celem projektu jest pokazanie, że student:
 
-- znajomość własnego projektu – **obligatoryjny warunek zaliczenia**,
-- znajomość działania wykorzystanych algorytmów,
-- umiejętność wyjaśnienia własnego kodu,
-- umiejętność uzasadnienia zastosowanych rozwiązań,
-- odpowiedzi na pytania dotyczące projektu.
+- rozumie zasadę działania omawianych algorytmów,
+- potrafi zaimplementować wybrane algorytmy samodzielnie,
+- potrafi korzystać z istniejących implementacji bibliotecznych,
+- potrafi porównać własną implementację z gotowym rozwiązaniem,
+- rozumie znaczenie parametrów i hiperparametrów algorytmu,
+- potrafi przeprowadzić eksperyment i zinterpretować jego wynik,
+- potrafi wskazać ograniczenia zastosowanych metod,
+- potrafi dobrać metodę do określonego problemu i uzasadnić swój wybór.
 
-Przykładowe pytania:
+Projekt wykonywany jest **indywidualnie**.
 
-- Dlaczego zastosowano właśnie ten algorytm?
-- Jak działa ten algorytm?
-- Co oznacza wskazany parametr?
-- Co stanie się po zwiększeniu jego wartości?
-- Dlaczego w tym miejscu wykonywana jest taka operacja?
-- Jak zmieniłby się rezultat przy innej inicjalizacji?
-- Dlaczego dwa algorytmy zachowują się inaczej dla tych samych danych?
-- Jakie są ograniczenia wykorzystanej metody?
-- Co dokładnie robi wskazany fragment kodu?
+---
 
-**Do zaliczenia ćwiczeń laboratoryjnych wymagane jest minimum 51 pkt oraz pozytywna obrona projektu.**
+### 9.2. Własne implementacje
 
-Samo uzyskanie odpowiedniej liczby punktów za kod nie wystarcza, jeżeli osoba studiująca nie potrafi wyjaśnić działania własnego rozwiązania.
+Projekt powinien zawierać wszystkie implementacje algorytmów, które podczas zajęć zostały oznaczone jako wymagające samodzielnej implementacji.
+
+W szczególności dotyczy to algorytmów realizowanych podczas laboratoriów w formie implementacji od podstaw, np.:
+
+- PCA,
+- liniowy SVM,
+- reguła Hebba,
+- sieć Hopfielda,
+- innych algorytmów wskazanych podczas kolejnych zajęć jako wymagające własnej implementacji.
+
+Własne implementacje powinny być wydzielone jako osobne moduły lub logicznie odseparowane części projektu.
+
+Przykładowa struktura:
+
+```text
+project/
+│
+├── implementations/
+│   ├── myPCA.py
+│   ├── mySVM.py
+│   ├── myHebb.py
+│   ├── myHopfield.py
+│   └── myDecisionTree.py
+│
+├── experiments/
+│   ├── PCA.ipynb
+│   ├── SVM.ipynb
+│   ├── Hebb.ipynb
+│   ├── Hopfield.ipynb
+│   └── DecisionTree.ipynb
+│
+└── README.md
+```
+
+Dopuszczalna jest inna organizacja projektu, jeżeli pozostaje czytelna i jednoznacznie rozdziela własne implementacje od kodu eksperymentalnego.
+
+Własna implementacja **nie może wykorzystywać wewnętrznie gotowej implementacji tego samego algorytmu**.
+
+Przykładowo własny:
+
+```python
+MyDecisionTreeClassifier
+```
+
+nie może realizować działania poprzez:
+
+```python
+DecisionTreeClassifier(...)
+```
+
+a własny:
+
+```python
+MyLinearSVM
+```
+
+nie może wykorzystywać:
+
+```python
+SVC(...)
+```
+
+jako właściwego mechanizmu uczenia.
+
+Nie jest wymagane odtworzenie wszystkich możliwości profesjonalnych bibliotek. Własna implementacja może być świadomie uproszczona, pod warunkiem że student potrafi wskazać zastosowane uproszczenia oraz wynikające z nich ograniczenia.
+
+---
+
+### 9.3. Porównanie z implementacjami bibliotecznymi
+
+Dla każdego algorytmu, dla którego istnieje odpowiednia i dostępna implementacja biblioteczna, należy porównać własne rozwiązanie z gotową implementacją.
+
+Przykładowo:
+
+```text
+MyPCA
+vs.
+sklearn.decomposition.PCA
+
+MyLinearSVM
+vs.
+sklearn.svm.SVC
+
+MyHopfieldNetwork
+vs.
+gotowa implementacja sieci Hopfielda
+
+MyDecisionTreeClassifier
+vs.
+sklearn.tree.DecisionTreeClassifier
+```
+
+Porównanie powinno być wykonane na **tych samych danych wejściowych** oraz, na ile jest to możliwe, przy odpowiadającej sobie konfiguracji obu metod.
+
+Celem porównania nie jest wykazanie, że własna implementacja jest szybsza lub lepsza od profesjonalnej biblioteki.
+
+Student powinien przede wszystkim odpowiedzieć na pytania:
+
+- Czy obie implementacje realizują tę samą ideę algorytmu?
+- Czy dla tych samych danych zachowują się podobnie?
+- Jakie różnice można zaobserwować?
+- Z czego mogą wynikać te różnice?
+- Jakie uproszczenia posiada własna implementacja?
+- Jakie dodatkowe możliwości oferuje gotowa biblioteka?
+
+Jeżeli dla danego algorytmu nie istnieje sensowna lub łatwo dostępna implementacja biblioteczna, należy krótko to zaznaczyć i zastosować inny uzgodniony sposób sprawdzenia poprawności własnego rozwiązania.
+
+---
+
+### 9.4. Eksperymenty
+
+Projekt nie może ograniczać się wyłącznie do jednorazowego uruchomienia własnej implementacji i wersji bibliotecznej.
+
+Dla każdego algorytmu należy przygotować **co najmniej jeden eksperyment pokazujący wpływ wybranego parametru, hiperparametru lub właściwości algorytmu na jego zachowanie**.
+
+Przykładowo:
+
+| Algorytm | Przykładowe eksperymenty |
+|---|---|
+| PCA | liczba składowych, udział zachowanej zmienności, rekonstrukcja danych |
+| SVM | parametr `C`, learning rate, liczba iteracji, kształt granicy decyzyjnej |
+| Reguła Hebba | learning rate, liczba epok, skala cech |
+| Sieć Hopfielda | poziom szumu, liczba zapamiętywanych wzorców, sposób aktualizacji neuronów |
+| Drzewo decyzyjne | `max_depth`, `min_samples_split`, kryterium podziału |
+| K-Means | liczba klastrów, inicjalizacja centroidów |
+| Fuzzy C-Means | liczba klastrów, parametr rozmycia |
+
+W miarę możliwości student powinien **przed wykonaniem eksperymentu określić spodziewany efekt zmiany danego parametru**, a następnie porównać przewidywanie z otrzymanym wynikiem.
+
+Oceniana jest przede wszystkim interpretacja zachowania algorytmu, a nie samo wygenerowanie wykresów lub wyników.
+
+---
+
+### 9.5. Część syntetyczna projektu
+
+Projekt powinien zawierać również część łączącą wiedzę z całego semestru.
+
+Student wybiera jeden problem lub zbiór danych i wskazuje **co najmniej dwie poznane podczas zajęć metody**, które można sensownie zastosować do jego analizy.
+
+Należy uzasadnić:
+
+- dlaczego wybrane metody pasują do danego problemu,
+- czego oczekuje się po każdej z nich,
+- czym różni się sposób ich działania,
+- jakie są ich najważniejsze ograniczenia,
+- dlaczego inne poznane podczas zajęć metody mogą być w danym przypadku mniej odpowiednie.
+
+Nie jest wymagane wskazanie jednego „najlepszego” algorytmu.
+
+Oceniana jest przede wszystkim **poprawność argumentacji i zrozumienie właściwości poszczególnych metod**.
+
+---
+
+### 9.6. Wnioski
+
+Każda część projektu powinna zakończyć się krótkimi wnioskami.
+
+Wnioski nie powinny ograniczać się do stwierdzeń:
+
+```text
+program działa,
+biblioteka zwróciła podobny wynik,
+parametr zmienił wykres.
+```
+
+Student powinien odnieść się między innymi do:
+
+- zachowania własnej implementacji,
+- zgodności lub różnic względem implementacji bibliotecznej,
+- wpływu parametrów na działanie algorytmu,
+- ograniczeń własnego rozwiązania,
+- ograniczeń samego algorytmu,
+- przypadków, w których zastosowanie danej metody jest uzasadnione,
+- przypadków, w których dana metoda może działać niewłaściwie lub być niewystarczająca.
+
+Wnioski powinny być wynikiem przeprowadzonych eksperymentów i własnej analizy.
+
+---
+
+### 9.7. Punktacja projektu
+
+Za projekt można uzyskać maksymalnie **70 punktów**.
+
+| Element | Punkty |
+|---|---:|
+| Poprawność i kompletność własnych implementacji | 25 pkt |
+| Poprawne wykorzystanie i porównanie z implementacjami bibliotecznymi | 15 pkt |
+| Eksperymenty dotyczące parametrów i zachowania algorytmów | 10 pkt |
+| Dobór metod do problemu i uzasadnienie wyboru | 10 pkt |
+| Jakość kodu, dokumentacja, wnioski i krytyczna analiza | 10 pkt |
+| **Razem** | **70 pkt** |
+
+#### Poprawność i kompletność własnych implementacji — 25 pkt
+
+Oceniane są:
+
+- poprawność działania,
+- zgodność implementacji z omawianym algorytmem,
+- samodzielna realizacja właściwej logiki algorytmu,
+- kompletność wymaganych implementacji,
+- czytelność rozwiązania,
+- obsługa podstawowych przypadków brzegowych,
+- umiejętność wskazania zastosowanych uproszczeń.
+
+Nie jest wymagane odtworzenie pełnej funkcjonalności profesjonalnych bibliotek.
+
+#### Porównanie z implementacjami bibliotecznymi — 15 pkt
+
+Oceniane są:
+
+- poprawne wykorzystanie biblioteki,
+- porównanie obu implementacji na tych samych danych,
+- odpowiednia konfiguracja porównywanych metod,
+- wskazanie podobieństw i różnic,
+- wyjaśnienie możliwych przyczyn różnic,
+- wskazanie możliwości obecnych w bibliotece, których nie posiada własna implementacja.
+
+#### Eksperymenty — 10 pkt
+
+Oceniane są:
+
+- sensowny dobór eksperymentów,
+- badanie istotnych parametrów lub właściwości algorytmu,
+- przewidywanie wpływu zmian parametrów,
+- interpretacja otrzymanych wyników,
+- wyciągnięcie własnych wniosków.
+
+#### Dobór metod — 10 pkt
+
+Oceniane są:
+
+- dopasowanie metod do wybranego problemu,
+- poprawne uzasadnienie wyboru,
+- rozumienie różnic pomiędzy algorytmami,
+- rozumienie ograniczeń zastosowanych metod,
+- umiejętność wskazania metod mniej odpowiednich dla danego problemu.
+
+#### Kod, dokumentacja i wnioski — 10 pkt
+
+Oceniane są:
+
+- czytelność kodu,
+- logiczna organizacja projektu,
+- nazewnictwo,
+- dokumentacja,
+- możliwość uruchomienia projektu,
+- jakość własnych wniosków,
+- krytyczna analiza rezultatów.
+
+---
+
+### 9.8. Obrona projektu
+
+Za obronę projektu można uzyskać maksymalnie **30 punktów**.
+
+Obrona trwa około **10–15 minut**.
+
+Student powinien być przygotowany na:
+
+- wyjaśnienie działania dowolnej własnej implementacji znajdującej się w projekcie,
+- omówienie wskazanego fragmentu własnego kodu,
+- wyjaśnienie matematycznej lub algorytmicznej podstawy zastosowanej metody,
+- wyjaśnienie znaczenia wybranego parametru,
+- porównanie własnej implementacji z wersją biblioteczną,
+- wskazanie różnic pomiędzy implementacjami,
+- wskazanie ograniczeń własnego rozwiązania,
+- uzasadnienie wyboru metod wykorzystanych w części syntetycznej,
+- przewidzenie efektu zmiany wskazanego parametru,
+- wykonanie niewielkiej modyfikacji własnego kodu.
+
+Przykładowe pytania podczas obrony:
+
+```text
+Co stanie się po zmniejszeniu liczby komponentów PCA?
+
+Co zmieni zwiększenie C w SVM?
+
+Dlaczego reguła Hebba nie rozwiązuje problemu XOR?
+
+Co może się stać w sieci Hopfielda po zapisaniu większej liczby podobnych wzorców?
+
+Co zmieni max_depth=1 w drzewie decyzyjnym?
+
+W którym miejscu własnego drzewa wybierany jest najlepszy podział?
+
+Dlaczego wynik własnej implementacji różni się od wyniku biblioteki?
+
+Jakiego zachowania oczekujesz po zmianie wskazanego parametru i dlaczego?
+```
+
+Samo posiadanie działającego programu nie jest wystarczające do zaliczenia.
+
+Student musi rozumieć:
+
+- napisany przez siebie kod,
+- działanie zastosowanych algorytmów,
+- znaczenie parametrów,
+- sposób przeprowadzenia eksperymentów,
+- przedstawione wnioski.
+
+Brak możliwości wyjaśnienia własnego rozwiązania może skutkować niezaliczeniem obrony niezależnie od liczby punktów uzyskanych za przesłany kod.
+
+---
+
+### 9.9. Warunek zaliczenia
+
+Łącznie można uzyskać:
+
+```text
+Projekt: 70 pkt
+Obrona:  30 pkt
+----------------
+Razem:  100 pkt
+```
+
+Do zaliczenia laboratoriów wymagane jest:
+
+- uzyskanie co najmniej **51 punktów na 100 możliwych**,
+- uzyskanie pozytywnego wyniku z obrony projektu,
+- oddanie projektu w terminie określonym w harmonogramie zajęć.
+
+Projekt należy oddać w formie umożliwiającej jego uruchomienie i sprawdzenie.
+
+Student odpowiada za poprawność, kompletność oraz znajomość całego kodu znajdującego się w oddanym projekcie.
 
 ---
 

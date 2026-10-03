@@ -403,7 +403,7 @@ Oceniane będą przede wszystkim:
 
 ### 9.1. Charakter projektu
 
-Podstawą zaliczenia laboratoriów jest **indywidualny projekt programistyczny stanowiący portfolio własnych implementacji algorytmów uczenia maszynowego omawianych podczas zajęć**.
+Podstawą zaliczenia laboratoriów jest **indywidualny projekt programistyczny stanowiący portfolio implementacji i eksperymentów dotyczących algorytmów uczenia maszynowego omawianych podczas zajęć**.
 
 Celem projektu jest pokazanie, że student:
 
@@ -418,19 +418,88 @@ Celem projektu jest pokazanie, że student:
 
 Projekt wykonywany jest **indywidualnie**.
 
+Projekt obejmuje wszystkie główne algorytmy realizowane podczas laboratoriów:
+
+1. PCA,
+2. liniowy SVM,
+3. regułę Hebba,
+4. sieć Hopfielda,
+5. drzewo decyzyjne,
+6. Bagging,
+7. Random Forest,
+8. AdaBoost,
+9. K-Means,
+10. Fuzzy C-Means.
+
+Nie wszystkie algorytmy muszą zostać zaimplementowane samodzielnie. Szczegółowy zakres opisano poniżej.
+
 ---
 
 ### 9.2. Własne implementacje
 
-Projekt powinien zawierać wszystkie implementacje algorytmów, które podczas zajęć zostały oznaczone jako wymagające samodzielnej implementacji.
+Student przygotowuje **8 własnych implementacji algorytmów**.
 
-W szczególności dotyczy to algorytmów realizowanych podczas laboratoriów w formie implementacji od podstaw, np.:
+#### Implementacje obowiązkowe
 
-- PCA,
+Każdy student musi samodzielnie zaimplementować:
+
+1. **PCA**,
+2. **regułę Hebba**,
+3. **sieć Hopfielda**,
+4. **drzewo decyzyjne**,
+5. **Bagging**,
+6. **K-Means**.
+
+#### Implementacje do wyboru
+
+Dodatkowo student wybiera **2 z 4** następujących algorytmów:
+
 - liniowy SVM,
-- reguła Hebba,
-- sieć Hopfielda,
-- innych algorytmów wskazanych podczas kolejnych zajęć jako wymagające własnej implementacji.
+- Random Forest,
+- AdaBoost,
+- Fuzzy C-Means.
+
+Przy czym **co najmniej jedna z dwóch wybranych implementacji musi należeć do metod zespołowych**, czyli musi to być:
+
+- Random Forest
+
+lub
+
+- AdaBoost.
+
+Przykładowe poprawne zestawy:
+
+```text
+SVM + Random Forest
+SVM + AdaBoost
+Random Forest + AdaBoost
+Random Forest + Fuzzy C-Means
+AdaBoost + Fuzzy C-Means
+```
+
+Nie spełnia tego wymagania zestaw:
+
+```text
+SVM + Fuzzy C-Means
+```
+
+ponieważ nie zawiera rozszerzonej metody zespołowej.
+
+Łącznie student przygotowuje więc:
+
+```text
+6 implementacji obowiązkowych
++
+2 implementacje do wyboru
+=
+8 własnych implementacji
+```
+
+Pozostałe **2 algorytmy również muszą znaleźć się w projekcie**, ale nie wymagają własnej implementacji. Dla nich obowiązuje wykorzystanie odpowiedniej implementacji bibliotecznej, przeprowadzenie eksperymentu oraz przygotowanie wniosków.
+
+---
+
+### 9.3. Wymagania dotyczące własnych implementacji
 
 Własne implementacje powinny być wydzielone jako osobne moduły lub logicznie odseparowane części projektu.
 
@@ -441,17 +510,25 @@ project/
 │
 ├── implementations/
 │   ├── myPCA.py
-│   ├── mySVM.py
 │   ├── myHebb.py
 │   ├── myHopfield.py
-│   └── myDecisionTree.py
+│   ├── myDecisionTree.py
+│   ├── myBagging.py
+│   ├── myKMeans.py
+│   ├── wybrany_algorytm_1.py
+│   └── wybrany_algorytm_2.py
 │
 ├── experiments/
 │   ├── PCA.ipynb
 │   ├── SVM.ipynb
 │   ├── Hebb.ipynb
 │   ├── Hopfield.ipynb
-│   └── DecisionTree.ipynb
+│   ├── DecisionTree.ipynb
+│   ├── Bagging.ipynb
+│   ├── RandomForest.ipynb
+│   ├── AdaBoost.ipynb
+│   ├── KMeans.ipynb
+│   └── FuzzyCMeans.ipynb
 │
 └── README.md
 ```
@@ -486,13 +563,29 @@ SVC(...)
 
 jako właściwego mechanizmu uczenia.
 
-Nie jest wymagane odtworzenie wszystkich możliwości profesjonalnych bibliotek. Własna implementacja może być świadomie uproszczona, pod warunkiem że student potrafi wskazać zastosowane uproszczenia oraz wynikające z nich ograniczenia.
+Analogicznie własny `MyKMeans` nie może wewnętrznie korzystać z `sklearn.cluster.KMeans`, a własny `MyAdaBoostClassifier` z `sklearn.ensemble.AdaBoostClassifier`.
+
+Nie jest wymagane odtworzenie wszystkich możliwości profesjonalnych bibliotek.
+
+Własna implementacja może być świadomie uproszczona, pod warunkiem że student potrafi:
+
+- wskazać zastosowane uproszczenia,
+- wyjaśnić ich konsekwencje,
+- wskazać funkcjonalności dostępne w profesjonalnej bibliotece, których nie posiada własne rozwiązanie.
 
 ---
 
-### 9.3. Porównanie z implementacjami bibliotecznymi
+### 9.4. Implementacje biblioteczne
 
-Dla każdego algorytmu, dla którego istnieje odpowiednia i dostępna implementacja biblioteczna, należy porównać własne rozwiązanie z gotową implementacją.
+**Wszystkie 10 algorytmów** powinno zostać wykorzystanych w części eksperymentalnej projektu.
+
+Dla 8 algorytmów posiadających własną implementację należy przeprowadzić porównanie:
+
+```text
+własna implementacja
+vs.
+implementacja biblioteczna
+```
 
 Przykładowo:
 
@@ -505,14 +598,45 @@ MyLinearSVM
 vs.
 sklearn.svm.SVC
 
-MyHopfieldNetwork
-vs.
-gotowa implementacja sieci Hopfielda
-
 MyDecisionTreeClassifier
 vs.
 sklearn.tree.DecisionTreeClassifier
+
+MyBaggingClassifier
+vs.
+sklearn.ensemble.BaggingClassifier
+
+MyRandomForestClassifier
+vs.
+sklearn.ensemble.RandomForestClassifier
+
+MyAdaBoostClassifier
+vs.
+sklearn.ensemble.AdaBoostClassifier
+
+MyKMeans
+vs.
+sklearn.cluster.KMeans
+
+MyFuzzyCMeans
+vs.
+skfuzzy.cluster.cmeans
 ```
+
+Dla algorytmów, których student **nie wybrał do własnej implementacji**, należy:
+
+1. użyć odpowiedniej gotowej implementacji,
+2. przeprowadzić przynajmniej jeden eksperyment,
+3. wyjaśnić zasadę działania algorytmu,
+4. przeanalizować wpływ wybranego parametru,
+5. wskazać najważniejsze ograniczenia,
+6. sformułować własne wnioski.
+
+Oznacza to, że w projekcie powinny znaleźć się wszystkie algorytmy z przedmiotu, ale tylko 8 z nich wymaga własnej implementacji.
+
+---
+
+### 9.5. Porównanie własnej implementacji z biblioteką
 
 Porównanie powinno być wykonane na **tych samych danych wejściowych** oraz, na ile jest to możliwe, przy odpowiadającej sobie konfiguracji obu metod.
 
@@ -526,16 +650,27 @@ Student powinien przede wszystkim odpowiedzieć na pytania:
 - Z czego mogą wynikać te różnice?
 - Jakie uproszczenia posiada własna implementacja?
 - Jakie dodatkowe możliwości oferuje gotowa biblioteka?
+- Czy różnice wynikają z samego algorytmu, czy ze szczegółów implementacji?
 
-Jeżeli dla danego algorytmu nie istnieje sensowna lub łatwo dostępna implementacja biblioteczna, należy krótko to zaznaczyć i zastosować inny uzgodniony sposób sprawdzenia poprawności własnego rozwiązania.
+Nie jest wymagane uzyskanie identycznych wyników.
+
+Przykładowo różne implementacje mogą:
+
+- inaczej inicjalizować model,
+- inaczej rozstrzygać remisy,
+- korzystać z innych warunków stopu,
+- stosować dodatkowe optymalizacje,
+- implementować bardziej rozbudowaną wersję algorytmu.
+
+Student powinien umieć takie różnice zauważyć i wyjaśnić.
 
 ---
 
-### 9.4. Eksperymenty
+### 9.6. Eksperymenty
 
-Projekt nie może ograniczać się wyłącznie do jednorazowego uruchomienia własnej implementacji i wersji bibliotecznej.
+Projekt nie może ograniczać się wyłącznie do jednorazowego uruchomienia algorytmu.
 
-Dla każdego algorytmu należy przygotować **co najmniej jeden eksperyment pokazujący wpływ wybranego parametru, hiperparametru lub właściwości algorytmu na jego zachowanie**.
+Dla **każdego z 10 algorytmów** należy przygotować **co najmniej jeden eksperyment pokazujący wpływ wybranego parametru, hiperparametru lub właściwości algorytmu na jego zachowanie**.
 
 Przykładowo:
 
@@ -546,16 +681,26 @@ Przykładowo:
 | Reguła Hebba | learning rate, liczba epok, skala cech |
 | Sieć Hopfielda | poziom szumu, liczba zapamiętywanych wzorców, sposób aktualizacji neuronów |
 | Drzewo decyzyjne | `max_depth`, `min_samples_split`, kryterium podziału |
-| K-Means | liczba klastrów, inicjalizacja centroidów |
-| Fuzzy C-Means | liczba klastrów, parametr rozmycia |
+| Bagging | `n_estimators`, `max_samples`, bootstrap |
+| Random Forest | `n_estimators`, `max_features`, głębokość drzew |
+| AdaBoost | `n_estimators`, `learning_rate`, zmiany wag obserwacji |
+| K-Means | liczba klastrów, inicjalizacja centroidów, skala cech |
+| Fuzzy C-Means | liczba klastrów, parametr `m`, FPC, stopień rozmycia |
 
 W miarę możliwości student powinien **przed wykonaniem eksperymentu określić spodziewany efekt zmiany danego parametru**, a następnie porównać przewidywanie z otrzymanym wynikiem.
 
-Oceniana jest przede wszystkim interpretacja zachowania algorytmu, a nie samo wygenerowanie wykresów lub wyników.
+Oceniana jest przede wszystkim:
+
+- interpretacja zachowania algorytmu,
+- poprawność wnioskowania,
+- znajomość wpływu parametrów,
+- umiejętność wskazania ograniczeń.
+
+Samo wygenerowanie wykresu lub tabeli nie jest wystarczające.
 
 ---
 
-### 9.5. Część syntetyczna projektu
+### 9.7. Część syntetyczna projektu
 
 Projekt powinien zawierać również część łączącą wiedzę z całego semestru.
 
@@ -575,7 +720,7 @@ Oceniana jest przede wszystkim **poprawność argumentacji i zrozumienie właśc
 
 ---
 
-### 9.6. Wnioski
+### 9.8. Wnioski
 
 Każda część projektu powinna zakończyć się krótkimi wnioskami.
 
@@ -597,19 +742,26 @@ Student powinien odnieść się między innymi do:
 - przypadków, w których zastosowanie danej metody jest uzasadnione,
 - przypadków, w których dana metoda może działać niewłaściwie lub być niewystarczająca.
 
+Dla dwóch algorytmów, które nie zostały zaimplementowane samodzielnie, wnioski powinny dotyczyć:
+
+- działania wersji bibliotecznej,
+- wpływu parametrów,
+- zachowania algorytmu podczas eksperymentu,
+- najważniejszych ograniczeń.
+
 Wnioski powinny być wynikiem przeprowadzonych eksperymentów i własnej analizy.
 
 ---
 
-### 9.7. Punktacja projektu
+### 9.9. Punktacja projektu
 
 Za projekt można uzyskać maksymalnie **70 punktów**.
 
 | Element | Punkty |
 |---|---:|
-| Poprawność i kompletność własnych implementacji | 25 pkt |
-| Poprawne wykorzystanie i porównanie z implementacjami bibliotecznymi | 15 pkt |
-| Eksperymenty dotyczące parametrów i zachowania algorytmów | 10 pkt |
+| Poprawność i kompletność 8 własnych implementacji | 25 pkt |
+| Wykorzystanie bibliotek i porównanie implementacji | 15 pkt |
+| Eksperymenty dla wszystkich 10 algorytmów | 10 pkt |
 | Dobór metod do problemu i uzasadnienie wyboru | 10 pkt |
 | Jakość kodu, dokumentacja, wnioski i krytyczna analiza | 10 pkt |
 | **Razem** | **70 pkt** |
@@ -618,21 +770,28 @@ Za projekt można uzyskać maksymalnie **70 punktów**.
 
 Oceniane są:
 
+- kompletność 6 implementacji obowiązkowych,
+- kompletność 2 poprawnie wybranych implementacji dodatkowych,
+- obecność co najmniej jednej własnej implementacji `Random Forest` lub `AdaBoost`,
 - poprawność działania,
 - zgodność implementacji z omawianym algorytmem,
 - samodzielna realizacja właściwej logiki algorytmu,
-- kompletność wymaganych implementacji,
 - czytelność rozwiązania,
 - obsługa podstawowych przypadków brzegowych,
 - umiejętność wskazania zastosowanych uproszczeń.
 
+Brak wymaganej implementacji powoduje utratę punktów w tej kategorii.
+
 Nie jest wymagane odtworzenie pełnej funkcjonalności profesjonalnych bibliotek.
 
-#### Porównanie z implementacjami bibliotecznymi — 15 pkt
+#### Wykorzystanie bibliotek i porównanie implementacji — 15 pkt
 
 Oceniane są:
 
-- poprawne wykorzystanie biblioteki,
+- obecność wszystkich 10 algorytmów w projekcie,
+- poprawne wykorzystanie implementacji bibliotecznych,
+- porównanie 8 własnych implementacji z bibliotekami,
+- wykorzystanie wersji bibliotecznych dla 2 algorytmów niewybranych do implementacji,
 - porównanie obu implementacji na tych samych danych,
 - odpowiednia konfiguracja porównywanych metod,
 - wskazanie podobieństw i różnic,
@@ -643,8 +802,8 @@ Oceniane są:
 
 Oceniane są:
 
-- sensowny dobór eksperymentów,
-- badanie istotnych parametrów lub właściwości algorytmu,
+- wykonanie eksperymentu dla każdego z 10 algorytmów,
+- sensowny dobór badanych parametrów,
 - przewidywanie wpływu zmian parametrów,
 - interpretacja otrzymanych wyników,
 - wyciągnięcie własnych wniosków.
@@ -673,24 +832,33 @@ Oceniane są:
 
 ---
 
-### 9.8. Obrona projektu
+### 9.10. Obrona projektu
 
 Za obronę projektu można uzyskać maksymalnie **30 punktów**.
 
 Obrona trwa około **10–15 minut**.
 
-Student powinien być przygotowany na:
+Student powinien być przygotowany na pytania dotyczące **dowolnego z 10 algorytmów znajdujących się w projekcie**, niezależnie od tego, czy został on zaimplementowany samodzielnie.
 
-- wyjaśnienie działania dowolnej własnej implementacji znajdującej się w projekcie,
-- omówienie wskazanego fragmentu własnego kodu,
-- wyjaśnienie matematycznej lub algorytmicznej podstawy zastosowanej metody,
-- wyjaśnienie znaczenia wybranego parametru,
+W przypadku algorytmów posiadających własną implementację student powinien być przygotowany na:
+
+- wyjaśnienie działania własnego rozwiązania,
+- omówienie wskazanego fragmentu kodu,
+- wyjaśnienie matematycznej lub algorytmicznej podstawy metody,
+- wskazanie miejsca realizującego kluczowy element algorytmu,
+- wyjaśnienie znaczenia parametrów,
 - porównanie własnej implementacji z wersją biblioteczną,
-- wskazanie różnic pomiędzy implementacjami,
-- wskazanie ograniczeń własnego rozwiązania,
-- uzasadnienie wyboru metod wykorzystanych w części syntetycznej,
-- przewidzenie efektu zmiany wskazanego parametru,
-- wykonanie niewielkiej modyfikacji własnego kodu.
+- wskazanie zastosowanych uproszczeń,
+- wykonanie niewielkiej modyfikacji kodu.
+
+W przypadku dwóch algorytmów niewybranych do własnej implementacji student powinien być przygotowany na:
+
+- wyjaśnienie sposobu działania algorytmu,
+- wyjaśnienie znaczenia najważniejszych parametrów,
+- omówienie przeprowadzonego eksperymentu,
+- interpretację uzyskanych wyników,
+- wskazanie ograniczeń algorytmu,
+- wyjaśnienie działania wykorzystanej implementacji bibliotecznej na poziomie jej interfejsu i parametrów.
 
 Przykładowe pytania podczas obrony:
 
@@ -707,6 +875,22 @@ Co zmieni max_depth=1 w drzewie decyzyjnym?
 
 W którym miejscu własnego drzewa wybierany jest najlepszy podział?
 
+Na czym polega bootstrap w Baggingu?
+
+Czym Random Forest różni się od zwykłego Baggingu drzew?
+
+Dlaczego w Random Forest losujemy cechy przy każdym węźle?
+
+Dlaczego AdaBoost zwiększa wagi błędnie sklasyfikowanych obserwacji?
+
+Co zmieni zwiększenie liczby klastrów w K-Means?
+
+Dlaczego skala cech ma znaczenie w K-Means?
+
+Co oznacza parametr m w Fuzzy C-Means?
+
+Czym różni się przynależność do klastra w K-Means i Fuzzy C-Means?
+
 Dlaczego wynik własnej implementacji różni się od wyniku biblioteki?
 
 Jakiego zachowania oczekujesz po zmianie wskazanego parametru i dlaczego?
@@ -717,16 +901,19 @@ Samo posiadanie działającego programu nie jest wystarczające do zaliczenia.
 Student musi rozumieć:
 
 - napisany przez siebie kod,
-- działanie zastosowanych algorytmów,
-- znaczenie parametrów,
+- działanie wszystkich 10 algorytmów objętych projektem,
+- znaczenie ich najważniejszych parametrów,
 - sposób przeprowadzenia eksperymentów,
+- wykorzystane implementacje biblioteczne,
 - przedstawione wnioski.
 
-Brak możliwości wyjaśnienia własnego rozwiązania może skutkować niezaliczeniem obrony niezależnie od liczby punktów uzyskanych za przesłany kod.
+Brak możliwości wyjaśnienia własnej implementacji może skutkować niezaliczeniem obrony niezależnie od liczby punktów uzyskanych za przesłany kod.
+
+Student może również otrzymać pytanie dotyczące algorytmu, którego **nie implementował samodzielnie**, ponieważ wszystkie 10 algorytmów należy do zakresu projektu i przedmiotu.
 
 ---
 
-### 9.9. Warunek zaliczenia
+### 9.11. Warunek zaliczenia
 
 Łącznie można uzyskać:
 
@@ -746,6 +933,37 @@ Do zaliczenia laboratoriów wymagane jest:
 Projekt należy oddać w formie umożliwiającej jego uruchomienie i sprawdzenie.
 
 Student odpowiada za poprawność, kompletność oraz znajomość całego kodu znajdującego się w oddanym projekcie.
+
+Wymagany zakres projektu można podsumować następująco:
+
+```text
+10 algorytmów w projekcie
+│
+├── 8 własnych implementacji
+│   │
+│   ├── 6 obowiązkowych:
+│   │   ├── PCA
+│   │   ├── Hebb
+│   │   ├── Hopfield
+│   │   ├── Decision Tree
+│   │   ├── Bagging
+│   │   └── K-Means
+│   │
+│   └── 2 z 4:
+│       ├── SVM
+│       ├── Random Forest
+│       ├── AdaBoost
+│       └── Fuzzy C-Means
+│
+│       przy czym co najmniej jedno z:
+│       Random Forest / AdaBoost
+│
+└── pozostałe 2 algorytmy:
+    ├── implementacja biblioteczna
+    ├── eksperyment
+    ├── analiza
+    └── wnioski
+```
 
 ---
 

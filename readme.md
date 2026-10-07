@@ -1027,6 +1027,12 @@ Na każdą osobą studiującą przypada około 10-15 minut na obronę. Na zapisa
 >
 > W pozostałych przypadkach narzędzia AI mogą być wykorzystywane jako narzędzie wspomagające, ale osoba studiująca ponosi pełną odpowiedzialność za wykorzystane rozwiązanie i musi potrafić je wyjaśnić jak i samodzielnie zmodyfikować.
 
+## Konsultacje
+* Sala: E1/20 (bądź inna ustalona wcześniej)
+* Terminy:
+    * Wt.: 11:30 - 13:00
+    * Śr.: 16:00 - 18:00
+
 ## Kontakt
 
 **mgr inż. Adrian Albrecht** ([adrian.albrecht@uwm.edu.pl](mailto:adrian.albrecht@uwm.edu.pl)) </br>
